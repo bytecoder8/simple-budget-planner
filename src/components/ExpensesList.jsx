@@ -4,12 +4,19 @@ import { ExpenseItem } from './ExpenseItem'
 
 
 export function ExpensesList() {
-  const { expenses } = useContext(AppContext)
+  const { expenses, dispatch } = useContext(AppContext)
+
+  const handleDelete = id => {
+    dispatch({
+      type: 'DELETE_EXPENSE',
+      payload: id
+    })
+  }
 
   return (
     <ul className="list-group">
       {expenses.map(expense => (
-        <ExpenseItem key={expense.id} {...expense} />
+        <ExpenseItem key={expense.id} {...expense} onDelete={handleDelete} />
       ))}
     </ul>
   )

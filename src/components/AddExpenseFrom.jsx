@@ -5,10 +5,24 @@ import { AppContext } from '../context/AppContext'
 export function AddExpenseFrom() {
   const [name, setName] = useState('')
   const [cost, setCost] = useState('')
+  const [error, setError] = useState('')
   const { dispatch } = useContext(AppContext)
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = event => {
+    event.preventDefault()
+
+    let validationError = ''
+    if (name.trim() === '') {
+      validationError = "Please enter the expense's name"
+    } else if (cost.trim() === '' || isNaN(parseInt(cost, 10))) {
+      validationError = "Please enter a valid number for cost"
+    }
+
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+
     dispatch({
       type: 'ADD_EXPENSE',
       payload: {
@@ -18,10 +32,12 @@ export function AddExpenseFrom() {
     })
     setName('')
     setCost('')
+    setError('')
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      { error && <div className="alert alert-danger">{ error }</div> }
       <div className="row">
         <div className="col-sm">
           <label htmlFor="expense-form-name">Name</label>
@@ -31,6 +47,7 @@ export function AddExpenseFrom() {
             id="expense-form-name"
             className="form-control"
             required="required"
+            value={ name }
             onChange={ e => setName(e.target.value) }
           />
         </div>
@@ -42,6 +59,7 @@ export function AddExpenseFrom() {
             id="expense-form-cost"
             className="form-control"
             required="required"
+            value={ cost }
             onChange={ e => setCost(e.target.value) }
           />
         </div>
