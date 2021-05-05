@@ -1,5 +1,7 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { LOCAL_STORAGE_KEY } from '../config'
+import { saveLocalStorageItem, getLocalStorageItem } from '../util'
 
 const initialState = {
   budget: 2000,
@@ -29,8 +31,14 @@ const appReducer = (state, action) => {
   
 export const AppContext = createContext()
 
+const init = initial => getLocalStorageItem(LOCAL_STORAGE_KEY, initial)
+
 export const AppProvider = (props) => {
-  const [state, dispatch] = useReducer(appReducer, initialState)
+  const [state, dispatch] = useReducer(appReducer, initialState, init)
+
+  useEffect(() => {
+    saveLocalStorageItem(LOCAL_STORAGE_KEY, state)
+  }, [state])
 
   return (
     <AppContext.Provider value={{
