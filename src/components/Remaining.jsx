@@ -11,7 +11,7 @@ export function Remaining() {
   const alertType = remaining > 0 ? 'alert-success' : 'alert-danger'
 
   return (
-    <div className={`alert ${alertType}`}>
+    <div className={`alert p-4 ${alertType}`}>
       <span>Remaining: ${remaining}</span>
     </div>
   )

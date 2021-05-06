@@ -31,7 +31,7 @@ export function Budget() {
             handleCancel={handleCancel}
           />
         :
-          <div className="alert alert-secondary d-flex justify-content-between align-items-center">
+          <div className="alert alert-secondary d-flex justify-content-between align-items-center" style={{minHeight: '74px'}}>
             <div>Budget: ${budget}</div>
             <button 
               className="btn btn-primary btn-small"

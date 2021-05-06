@@ -29,12 +29,13 @@ export function BudgetInlineForm({ budget, handleSave, handleCancel }) {
   }
 
   return (
-    <form className="alert alert-secondary d-flex justify-content-between align-items-center">
+    <form className="alert alert-secondary d-flex justify-content-between align-items-center" style={{minHeight: '74px'}}>
       <input
         type="text"
         name="budget"
         placeholder="Enter new budget"
         className="form-control"
+        style={{minWidth: 0}} // firefox bug
         value={newBudget}
         onChange={onInputChange}
       />

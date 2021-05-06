@@ -12,13 +12,13 @@ function App() {
     <div className="container">
       <h1 className="mt-3">Simple Budget Planner</h1>
       <div className="row mt-3">
-        <div className="col-sm">
+        <div className="col col-xl col-md-12">
           <Budget />
         </div>
-        <div className="col-sm">
+        <div className="col-md">
           <Remaining />
         </div>
-        <div className="col-sm">
+        <div className="col-md">
           <ExpensesTotal />
         </div>
       </div>

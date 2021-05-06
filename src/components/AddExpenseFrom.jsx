@@ -46,7 +46,6 @@ export function AddExpenseFrom() {
           name="name"
           id="expense-form-name"
           className="form-control"
-          required="required"
           value={ name }
           onChange={ e => setName(e.target.value) }
         />
@@ -58,7 +57,6 @@ export function AddExpenseFrom() {
           name="cost"
           id="expense-form-cost"
           className="form-control"
-          required="required"
           value={ cost }
           onChange={ e => setCost(e.target.value) }
         />
