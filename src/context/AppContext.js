@@ -1,7 +1,7 @@
 import { createContext, useReducer, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { LOCAL_STORAGE_KEY } from '../config'
-import { saveLocalStorageItem, getLocalStorageItem } from '../util'
+import { saveLocalStorageItem, getLocalStorageItem, getStorageEventValue } from '../util'
 
 const initialState = {
   budget: 2000,
@@ -24,6 +24,8 @@ const appReducer = (state, action) => {
       return {...state, expenses: state.expenses.filter( item => item.id !== action.payload)}
     case 'CHANGE_BUDGET':
       return {...state, budget: action.payload}
+    case 'RELOAD_STATE':
+      return {...state, ...action.payload}
     default:
       return state
     }
@@ -39,6 +41,24 @@ export const AppProvider = (props) => {
   useEffect(() => {
     saveLocalStorageItem(LOCAL_STORAGE_KEY, state)
   }, [state])
+
+  // sync app when it's opened in two windows/tabs
+  useEffect(() => {
+    const handleStorageChange = event => {
+      const value = getStorageEventValue(event, LOCAL_STORAGE_KEY)
+      if (value) {
+        dispatch({
+          type: 'RELOAD_STATE',
+          payload: value
+        })
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
 
   return (
     <AppContext.Provider value={{

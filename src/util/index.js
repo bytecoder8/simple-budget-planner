@@ -23,3 +23,13 @@ export const saveLocalStorageItem = (key, value) => {
     console.error(error)
   }
 }
+
+export const getStorageEventValue = (event, key) => {
+  if (event.key !== key) return
+  try {
+    const item = event.newValue
+    return item ? JSON.parse(item) : null
+  } catch (error) {
+    console.error(error)
+  }
+}
